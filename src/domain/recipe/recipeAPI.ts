@@ -38,7 +38,7 @@ recipeRouter.get(
  *                 limit (optional, number) - The number of recipes per page.
  */
 recipeRouter.get(
-  "/:page?/:limit?",
+  "/all/:page?/:limit?",
   validator("param", (value, c) => {
     const parsed = getRecipesSchema.safeParse(value);
     if (!parsed.success) {
