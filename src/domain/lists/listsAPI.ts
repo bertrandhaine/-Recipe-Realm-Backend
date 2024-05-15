@@ -18,6 +18,9 @@ import {
 const listsRouter = new Hono();
 const listsRepository = new ListsRepository();
 
+/**
+ * @description Retrieve all custom lists for the user.
+ */
 listsRouter.get("/", (c) => {
   try {
     const lists = listsRepository.findUserCustomList();
@@ -27,6 +30,11 @@ listsRouter.get("/", (c) => {
   }
 });
 
+/**
+ * @description Create a new custom list.
+ * Body parameters: title (string) - The title of the new list.
+ *                  recipe (array) - The initial recipes to add to the list.
+ */
 listsRouter.post(
   "/",
   validator("json", async (value, c) => {
@@ -56,6 +64,11 @@ listsRouter.post(
   }
 );
 
+/**
+ * @description Remove a recipe from a custom list.
+ * URL parameters: listId (number) - The ID of the list.
+ *                 recipeName (string) - The name of the recipe to remove.
+ */
 listsRouter.delete(
   "/:listId/recipes/:recipeName",
   validator("param", (value, c) => {
@@ -84,6 +97,11 @@ listsRouter.delete(
   }
 );
 
+/**
+ * @description Add a recipe to a specific custom list.
+ * URL parameter: listId (number) - The ID of the list.
+ * Body parameters: recipe (object) - The recipe to add.
+ */
 listsRouter.post(
   "/:listId",
   validator("param", (value, c) => {

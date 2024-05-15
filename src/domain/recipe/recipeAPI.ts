@@ -8,6 +8,10 @@ import { RecipeNotFoundError } from "../exceptions/CustomExceptions";
 const recipeRouter = new Hono();
 const recipeRepository = new RecipeRepository();
 
+/**
+ * @description Search for recipes by name.
+ * Query parameter: q (string) - The name of the recipe to search for.
+ */
 recipeRouter.get(
   "/search",
   validator("query", (value, c) => {
@@ -28,8 +32,13 @@ recipeRouter.get(
   }
 );
 
+/**
+ * @description Retrieve a list of recipes with optional pagination.
+ * URL parameters: page (optional, number) - The page number.
+ *                 limit (optional, number) - The number of recipes per page.
+ */
 recipeRouter.get(
-  "/all/:page?/:limit?",
+  "/:page?/:limit?",
   validator("param", (value, c) => {
     const parsed = getRecipesSchema.safeParse(value);
     if (!parsed.success) {
@@ -57,6 +66,10 @@ recipeRouter.get(
   }
 );
 
+/**
+ * @description Retrieve a single recipe by its slug.
+ * URL parameter: slug (string) - The slug of the recipe.
+ */
 recipeRouter.get(
   "/:slug",
   validator("param", (value, c) => {
