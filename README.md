@@ -1,12 +1,12 @@
 # Recipe Realm Backend
 
-This is the backend API for the Recipe Realm application, which supports the frontend by providing RESTful API endpoints for managing recipes and custom lists.
+This is the backend API for the Recipe Realm application, which supports the frontend by providing RESTful API endpoints for managing recipes and custom lists. The API allows users to search for recipes, manage custom lists, and handle recipes within those lists.
 
 ## Technologies Used
 
 - **Node.js**: A JavaScript runtime built on Chrome's V8 JavaScript engine.
 - **Hono**: A lightweight and fast framework for building server-side applications. [Learn more about Hono](https://honojs.dev/).
-- **Validator**: For request validation to ensure data integrity.
+- **Zod**: For request validation to ensure data integrity.
 - **Cors**: To enable CORS for handling resource sharing issues.
 
 ## Features
@@ -52,18 +52,55 @@ To start the server, run:
 npm start
 ```
 
-This will start the server on the port per default `3000`.
+This will start the server on the default port `3000`.
 
 ## API Endpoints
 
 The following are the main endpoints provided by this backend:
 
-- `GET /api/recipes/:page?/:limit?`: Retrieve paginated recipes.
-- `GET /api/recipe/:slug`: Fetch a single recipe by slug.
-- `GET /api/lists`: Retrieve all custom lists.
-- `POST /api/lists`: Create a new custom list.
-- `DELETE /api/lists/:listId/recipes/:recipeName`: Remove a recipe from a list.
-- `POST /api/lists/:listId`: Add a recipe to a specific list.
+### Recipes
+
+- `GET /api/recipes/all/:page?/:limit?`
+  - **Description**: Retrieve paginated recipes.
+  - **Parameters**:
+    - `page` (optional): The page number for pagination.
+    - `limit` (optional): The number of recipes per page.
+  - **Response**: A list of recipes with pagination details.
+
+- `GET /api/recipe/:slug`
+  - **Description**: Fetch a single recipe by slug.
+  - **Parameters**:
+    - `slug`: The slug of the recipe.
+  - **Response**: Details of the specified recipe.
+
+### Lists
+
+- `GET /api/lists`
+  - **Description**: Retrieve all custom lists.
+  - **Response**: A list of all custom lists.
+
+- `POST /api/lists`
+  - **Description**: Create a new custom list.
+  - **Body**:
+    - `title`: The title of the new list.
+    - `recipe` (optional): An initial recipe to add to the list.
+  - **Response**: The newly created list.
+
+- `DELETE /api/lists/:listId/recipes/:recipeName`
+  - **Description**: Remove a recipe from a list.
+  - **Parameters**:
+    - `listId`: The ID of the list.
+    - `recipeName`: The name of the recipe to remove.
+  - **Response**: The updated list after removal.
+
+- `POST /api/lists/:listId`
+  - **Description**: Add a recipe to a specific list.
+  - **Parameters**:
+    - `listId`: The ID of the list.
+  - **Body**:
+    - `recipe`: The recipe to add.
+  - **Response**: The updated list after adding the recipe.
+
 
 ## License
 
@@ -72,3 +109,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Author
 
 - **Bertrand Uemura Haine**
+
+## Contact
+
+For questions or feedback, please reach out to [bertrand.haine@live.fr](mailto:bertrand.haine@live.fr).
